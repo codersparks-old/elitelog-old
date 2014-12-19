@@ -1,0 +1,30 @@
+System Visit JSON Structure
+
+{
+    "system":"<system_name>"
+}
+
+Market JSON Structure
+
+	{
+	    "system":"<system_name>",
+	    "station":"<station_name>",
+	    "commodities": 
+	    { "<name>" : { 
+			"sell" : <sell_price>,
+			"buy" : <buy_price>,
+			"demand" : <demand_amount>,
+			"demandLevel" : <demand_level>,
+			"supply" : <supply_amount>, 
+			"supplyLevel":"<supply_level>"
+			 },
+	       "<name>" : { 
+			"sell" : <sell_price>,
+			"buy" : <buy_price>,
+			"demand" : <demand_amount>,
+			      "demandLevel" : <demand_level>,
+			"supply" : <supply_amount>, 
+			"supplyLevel":"<supply_level>"
+			 }	
+	    },
+	}
