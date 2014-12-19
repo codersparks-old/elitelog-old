@@ -34,7 +34,7 @@ public class CommodityMarketDetail {
 		return supplyLevel;
 	}
 	public void setSupplyLevel(String supplyLevel) {
-		this.supplyLevel = supplyLevel.toUpperCase();
+		this.supplyLevel = supplyLevel;
 	}
 	public int getDemand() {
 		return demand;
@@ -46,7 +46,7 @@ public class CommodityMarketDetail {
 		return demandLevel;
 	}
 	public void setDemandLevel(String demandLevel) {
-		this.demandLevel = demandLevel.toUpperCase();
+		this.demandLevel = demandLevel;
 	}
 	public int getBuy() {
 		return buy;

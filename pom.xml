@@ -67,6 +67,14 @@
 				<database>elitelog_test</database>
 			</properties>
 		</profile>
+		<profile>
+			<id>openshift</id>
+			<properties>
+				<mongodb_host>#{ systemProperties['OPENSHIFT_MONGODB_DB_HOST']}</mongodb_host>
+				<mongodb_port>#{ systemProperties['OPENSHIFT_MONGODB_DB_PORT']}</mongodb_port>
+				<database>elitelog</database>
+			</properties>
+		</profile>
 	</profiles>
 </project>
 
