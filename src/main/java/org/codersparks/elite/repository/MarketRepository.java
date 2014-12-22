@@ -17,7 +17,6 @@ public interface MarketRepository extends MongoRepository<Market, String>{
 	Collection<Market> findBySystemOrderByCreatedDesc(@Param("system") String system);
 	
 	@RestResource(rel="byCommodity", path="byCommodity")
-	@Query(value="{ 'commodities.name' : ?0 }")
-	Collection<Market> findByCommodityName(@Param("commodity") String commodity);
+	Collection<Market> findByCommoditiesNameOrderByCreatedDesc(@Param("name") String name);
 	
 }
