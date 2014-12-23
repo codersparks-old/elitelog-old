@@ -40,6 +40,7 @@ public class Application {
 		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory);
 		return mongoTemplate;
 	}
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);

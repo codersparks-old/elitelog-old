@@ -5,13 +5,12 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.List;
 
-import org.codersparks.elite.resource.DistinctCommodities;
+import org.codersparks.elite.resource.DistinctSystems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.rest.webmvc.RepositoryLinksResource;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.ResourceProcessor;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,26 +19,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@ExposesResourceFor(DistinctCommodities.class)
-public class CommoditiesController implements ResourceProcessor<RepositoryLinksResource> {
-	
+@ExposesResourceFor(DistinctSystems.class)
+public class SystemsController implements ResourceProcessor<RepositoryLinksResource>{
+
 	@Autowired
 	MongoTemplate mongo;
-
-	@RequestMapping("/api/commodities/distinct")
+	
+	@RequestMapping("/api/systems/distinct")
 	@ResponseBody
-	public HttpEntity<DistinctCommodities> distinctCommodities() {
+	public HttpEntity<DistinctSystems> distinctSystems() {
 		
-		List<String> distinctList = mongo.getCollection("commodityData").distinct("name");
+		List<String> distinctList = mongo.getCollection("commodityData").distinct("system");
 		
-		DistinctCommodities resource = new DistinctCommodities(distinctList);
-		resource.add(linkTo(methodOn(CommoditiesController.class).distinctCommodities()).withSelfRel());
-		return new ResponseEntity<DistinctCommodities>(resource, HttpStatus.OK);
+		DistinctSystems resource = new DistinctSystems(distinctList);
+		resource.add(linkTo(methodOn(SystemsController.class).distinctSystems()).withSelfRel());
+		return new ResponseEntity<DistinctSystems>(resource, HttpStatus.OK);
 	}
-
+	
 	@Override
 	public RepositoryLinksResource process(RepositoryLinksResource resource) {
-		resource.add(linkTo(methodOn(CommoditiesController.class).distinctCommodities()).withRel("distinctCommoditiesList"));
+		resource.add(linkTo(methodOn(SystemsController.class).distinctSystems()).withRel("systemsList"));
 		return resource;
 	}
 	

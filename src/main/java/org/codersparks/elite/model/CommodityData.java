@@ -1,12 +1,20 @@
 package org.codersparks.elite.model;
 
-import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Field;
 
-public class CommodityMarketDetail {
+public class CommodityData { 
+	
+	@Id
+	private String id;
+	
+	@Indexed
+	private String station;
+	
+	@Indexed
+	private String system;
 	
 	@Indexed
 	private String name;
@@ -23,7 +31,28 @@ public class CommodityMarketDetail {
 	
 	private int sell;
 	
+	@Indexed(expireAfterSeconds=5184000)
+	private Date created = new Date();
 	
+	
+	public String getStation() {
+		return station;
+	}
+	public void setStation(String station) {
+		this.station = station;
+	}
+	public String getSystem() {
+		return system;
+	}
+	public void setSystem(String system) {
+		this.system = system;
+	}
+	public Date getCreated() {
+		return created;
+	}
+	public void setCreated(Date created) {
+		this.created = created;
+	}
 	public int getSupply() {
 		return supply;
 	}
