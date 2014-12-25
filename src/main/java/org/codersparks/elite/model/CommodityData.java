@@ -21,10 +21,12 @@ public class CommodityData {
 	
 	private int supply;
 	
+	@Indexed
 	private String supplyLevel;
 	
 	private int demand;
 	
+	@Indexed
 	private String demandLevel;
 	
 	private int buy;
