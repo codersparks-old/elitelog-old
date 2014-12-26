@@ -1,71 +1,133 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="codersparks@gmail.com">
-    <link rel="icon" href="../../favicon.ico">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Log application for Elite Dangerous">
+<meta name="author" content="codersparks@gmail.com">
+<link rel="icon" href="../../favicon.ico">
 
-    <title>Elite Log - Compare Commodities</title>
+<title>Elite Log - Assistant for Elite Dangerous</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="external/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-      
-    <!-- Site CSS -->
-    <link href="css/site.css" rel="stylesheet">
+<!-- Bootstrap core CSS -->
+<link href="external/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="external/bootstrap/css/bootstrap-theme.min.css"
+	rel="stylesheet">
 
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
+<!-- Site CSS -->
+<link href="css/site.css" rel="stylesheet">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-  </head>
+</head>
 
-  <body>
+<body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">EliteLog</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="/index.html">CoderSparks' EliteLog</a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="/index.html">Home</a></li>
+					<li class="dropdown"><a href="#" class="dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-expanded="false">Functions<span
+							class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="#">Compare Comodity Pricess</a></li>
+							<li><a href="#">Compare Station Prices</a></li>
+							<li><a href="#">Most profitable trade route</a></li>
+						</ul></li>
+					<li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#issueModal">Report Issues</a></li>
 
-        </div><!--/.navbar-collapse -->
-      </div>
-    </nav>
+				</ul>
+			</div>
+			<!--/.navbar-collapse -->
+		</div>
+		
 
-    <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>EliteLog</h1>
-        <p class="uk-text-large uk-text-left">Elite Log is a tool that I have created to assist me whilst playing <a herf="http://www.elitedangerous.com/">Elite Dangerous</a></p>
-        <p>It is designed for me to capture data as I fly around the elite dangerous galaxy. I will eventually connect to the good work being done for the <a href="https://forums.frontier.co.uk/showthread.php?t=57986">EDDN</a> but that will come later as I understand how I want to use the statistics that I gather</p>
-      </div>
-    </div>
+		<!-- About Modal -->
+		<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog"
+			aria-labelledby="aboutModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">About</h4>
+					</div>
+					<div class="modal-body">
+                      <h4>CoderSparks' EliteLog</h4>
+                      <p>This tool was created to allow me (codersparks or Cmdr Sparkster in game) to track the prices of commodities found during my time trading the <a href="">Elite Dangerous</a></p>
+                      <p>It has been created purely for my own use, to practise the use of <a href="http://spring.io">Spring</a> (in particular Spring-Data-Rest) to create a RESTFul webapp that I can develop different clients for to consume the data</p>
+                      <p>The webapp (and this website) are deployed as a <a href="http://en.wikipedia.org/wiki/WAR_%28file_format%29">WAR file</a> and the code for this can be found at my <a href="https://github.com/codersparks/elitelog">GitHub</a> page</p>
+                    </div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+        
+        <!-- Issues Modal -->
+		<div class="modal fade" id="issueModal" tabindex="-1" role="dialog"
+			aria-labelledby="issueModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Report Issues</h4>
+					</div>
+					<div class="modal-body">
+                      <h4>CoderSparks' EliteLog Issue Reporting</h4>
+                      <p>Whilst I would love to say that I write perfect code, however, I realise that I do not and therefore there may be issues with the website/webapp therefore, please use the <a href="https://github.com/codersparks/elitelog/issues">issue repoting</a> functionality of github to report isses</p>
+                    </div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<div class="container-fluid">
 
-    <div class="container">
-      
-      <hr>
-
-      <footer>
-        <p>&copy; Codersparks 2014</p>
-      </footer>
-    </div> <!-- /container -->
+		<img src="images/banner.png" class="img-responsive img-margin"
+			alt="Responsive image">
+	</div>
+	<!-- Container -->
+	<div class="container-fluid">
 
 
-    <!-- Bootstrap core JavaScript
+		<footer>
+			<p>&copy; CoderSparks 2014</p>
+		</footer>
+	</div>
+	<!-- /container -->
+
+
+	<!-- Bootstrap core JavaScript
     ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="external/jquery-1.11.2.min.js"></script>
-    <script src="external/bootstrap/js/bootstrap.min.js"></script>
-  </body>
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="external/jquery-1.11.2.min.js"></script>
+	<script src="external/bootstrap/js/bootstrap.min.js"></script>
+</body>
 </html>
