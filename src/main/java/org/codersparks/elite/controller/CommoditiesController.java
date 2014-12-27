@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.rest.webmvc.RepositoryLinksResource;
 import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.hateoas.ResourceProcessor;
-import org.springframework.hateoas.mvc.ControllerLinkBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
