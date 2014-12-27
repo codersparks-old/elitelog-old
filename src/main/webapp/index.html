@@ -16,6 +16,8 @@
 <link href="external/bootstrap/css/bootstrap-theme.min.css"
 	rel="stylesheet">
 
+
+    
 <!-- Site CSS -->
 <link href="css/site.css" rel="stylesheet">
 
@@ -42,14 +44,14 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href="/index.html">Home</a></li>
+					<li class="active"><a href="/">Home</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle"
 						data-toggle="dropdown" role="button" aria-expanded="false">Functions<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li><a href="#">Compare Comodity Pricess</a></li>
-							<li><a href="#">Compare Station Prices</a></li>
-							<li><a href="#">Most profitable trade route</a></li>
+							<li><a href="/commodity-compare.html">Compare Comodity Prices</a></li>
+							<li><a href="/station-compare.html">Compare Station Prices</a></li>
+							<li><a href="/most-profit.html">Most profitable trade route</a></li>
 						</ul></li>
 					<li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
 					<li><a href="#" data-toggle="modal" data-target="#issueModal">Report Issues</a></li>
@@ -74,8 +76,8 @@
 					</div>
 					<div class="modal-body">
                       <h4>CoderSparks' EliteLog</h4>
-                      <p>This tool was created to allow me (codersparks or Cmdr Sparkster in game) to track the prices of commodities found during my time trading the <a href="">Elite Dangerous</a></p>
-                      <p>It has been created purely for my own use, to practise the use of <a href="http://spring.io">Spring</a> (in particular Spring-Data-Rest) to create a RESTFul webapp that I can develop different clients for to consume the data</p>
+                      <p>This tool was created to allow me (codersparks or Cmdr Sparkster in game) to track the prices of commodities found during my time trading the <a href="http://www.elitedangerous.com/">Elite Dangerous</a></p>
+                      <p>It has been created purely for my own use, to practise the use of <a href="http://spring.io">Spring</a> (in particular Spring-Data-Rest) to create a RESTFul webapp that I can develop different clients to consume the data</p>
                       <p>The webapp (and this website) are deployed as a <a href="http://en.wikipedia.org/wiki/WAR_%28file_format%29">WAR file</a> and the code for this can be found at my <a href="https://github.com/codersparks/elitelog">GitHub</a> page</p>
                     </div>
 					<div class="modal-footer">
@@ -99,7 +101,7 @@
 					</div>
 					<div class="modal-body">
                       <h4>CoderSparks' EliteLog Issue Reporting</h4>
-                      <p>Whilst I would love to say that I write perfect code, however, I realise that I do not and therefore there may be issues with the website/webapp therefore, please use the <a href="https://github.com/codersparks/elitelog/issues">issue repoting</a> functionality of github to report isses</p>
+                      <p>Whilst I would love to say that I write perfect code, however, I realise that I do not and therefore there may be issues with the website/webapp, if you find any such issues please use the <a href="https://github.com/codersparks/elitelog/issues">issue repoting</a> functionality of github to report, thanks :)</p>
                     </div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -108,17 +110,19 @@
 			</div>
 		</div>
 	</nav>
-	<div class="container-fluid">
-
-		<img src="images/banner.png" class="img-responsive img-margin"
-			alt="Responsive image">
+	<div class="container-fluid" id="banner-div">
+        <div class="row">
+          <div class="col-md-6 col-md-offset-3">
+            <img src="images/banner.png" class="img-responsive img-margin" alt="Responsive image" />
+          </div>
+        </div>
 	</div>
 	<!-- Container -->
 	<div class="container-fluid">
 		<!-- Example row of columns -->
 		<div class="row">
 			<div class="col-md-4">
-				<div class="panel panel-info">
+				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title">Compare Comodity Pricess</h3>
 					</div>
@@ -127,8 +131,9 @@
 							<b>TODO:</b> Compare the prices of a selected commodity at the
 							stations stored in the DB
 						</p>
+                        <br />
 						<p>
-							<a class="btn btn-info" href="#" role="button">Compare
+							<a class="btn btn-primary" href="commodity-compare.html" role="button">Compare
 								Comodity Pricess &raquo;</a>
 						</p>
 					</div>
@@ -136,7 +141,7 @@
 
 			</div>
 			<div class="col-md-4">
-				<div class="panel panel-info">
+				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title">Compare Station Prices</h3>
 					</div>
@@ -145,15 +150,16 @@
 							<b>TODO:</b> Compare the prices of all commodities between the
 							selected stations
 						</p>
+                        <br />
 						<p>
-							<a class="btn btn-info" href="#" role="button">Compare
+							<a class="btn btn-primary" href="#" role="button">Compare
 								Station Prices &raquo;</a>
 						</p>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-4">
-				<div class="panel panel-info">
+				<div class="panel panel-primary">
 					<div class="panel-heading">
 						<h3 class="panel-title">Most profitable trade route</h3>
 					</div>
@@ -164,7 +170,7 @@
 							cost of fuel)
 						</p>
 						<p>
-							<a class="btn btn-info" href="#" role="button">Go &raquo;</a>
+							<a class="btn btn-primary" href="#" role="button">Most Profitable Route &raquo;</a>
 						</p>
 					</div>
 				</div>
@@ -185,5 +191,6 @@
 	<!-- Placed at the end of the document so the pages load faster -->
 	<script src="external/jquery-1.11.2.min.js"></script>
 	<script src="external/bootstrap/js/bootstrap.min.js"></script>
+
 </body>
 </html>
