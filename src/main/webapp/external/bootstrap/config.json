@@ -15,7 +15,7 @@
     "@text-color": "@gray-dark",
     "@link-color": "@brand-primary",
     "@link-hover-color": "darken(@link-color, 15%)",
-    "@link-hover-decoration": "underline",
+    "@link-hover-decoration": "none",
     "@font-family-sans-serif": "\"Helvetica Neue\", Helvetica, Arial, sans-serif",
     "@font-family-serif": "Georgia, \"Times New Roman\", Times, serif",
     "@font-family-monospace": "Menlo, Monaco, Consolas, \"Courier New\", monospace",
@@ -215,7 +215,7 @@
     "@state-success-text": "#3c763d",
     "@state-success-bg": "#dff0d8",
     "@state-success-border": "darken(spin(@state-success-bg, -10), 5%)",
-    "@state-info-text": "darken(@state-info-bg, 40%)",
+    "@state-info-text": "darken(@state-info-bg, 50%)",
     "@state-info-bg": "@brand-info",
     "@state-info-border": "darken(spin(@state-info-bg, -10), 7%)",
     "@state-warning-text": "#8a6d3b",
@@ -226,7 +226,7 @@
     "@state-danger-border": "darken(spin(@state-danger-bg, -10), 5%)",
     "@tooltip-max-width": "200px",
     "@tooltip-color": "#fff",
-    "@tooltip-bg": "#000",
+    "@tooltip-bg": "@brand-primary",
     "@tooltip-opacity": ".9",
     "@tooltip-arrow-width": "5px",
     "@tooltip-arrow-color": "@tooltip-bg",
@@ -425,5 +425,5 @@
     "scrollspy.js",
     "transition.js"
   ],
-  "customizerUrl": "http://getbootstrap.com/customize/?id=a698615a70754a68dc7b"
+  "customizerUrl": "http://getbootstrap.com/customize/?id=3dbafbd79f30f541d803"
 }
