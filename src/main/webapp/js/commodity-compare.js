@@ -28,6 +28,7 @@ $(document).ready(function() {
     });
     
     $('.tt-dropdown').css('background-color','#fff');
+	$('.tt-hint').addClass('form-control');
     
     
     //console.log(commodities)
