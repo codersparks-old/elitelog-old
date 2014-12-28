@@ -5,8 +5,8 @@
  */
 
 /*!
- * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=4815e12505163ddaf84a)
- * Config saved to config.json and https://gist.github.com/4815e12505163ddaf84a
+ * Generated using the Bootstrap Customizer (http://getbootstrap.com/customize/?id=a698615a70754a68dc7b)
+ * Config saved to config.json and https://gist.github.com/a698615a70754a68dc7b
  */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
@@ -2938,7 +2938,7 @@ fieldset[disabled] .btn-success.active {
   background-color: #ffffff;
 }
 .btn-info {
-  color: #ffffff;
+  color: #cc3300;
   background-color: #ffb399;
   border-color: #ffa080;
 }
@@ -2948,7 +2948,7 @@ fieldset[disabled] .btn-success.active {
 .btn-info:active,
 .btn-info.active,
 .open > .dropdown-toggle.btn-info {
-  color: #ffffff;
+  color: #cc3300;
   background-color: #ff8c66;
   border-color: #ff7242;
 }
@@ -2980,7 +2980,7 @@ fieldset[disabled] .btn-info.active {
 }
 .btn-info .badge {
   color: #ffb399;
-  background-color: #ffffff;
+  background-color: #cc3300;
 }
 .btn-warning {
   color: #ffffff;
