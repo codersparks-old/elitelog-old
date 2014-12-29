@@ -31,7 +31,7 @@ echo -e "\nBuilding elite log..."
 mvn clean package
 
 echo -e "\nTagging repository with tag 'elitelog-$TAG'"
-git tag -a "elitelog-$TAG"
+git tag -a "elitelog-$TAG" -m "Adding tag: elitelog-$TAG"
 
 popd
 
