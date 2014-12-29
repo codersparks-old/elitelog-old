@@ -32,7 +32,7 @@ mvn clean package
 
 echo -e "\nTagging repository with tag 'elitelog-$TAG'"
 git tag -a "elitelog-$TAG" -m "Adding tag: elitelog-$TAG"
-
+git push origin elitelog-$TAG 
 popd
 
 echo -e "Copying war to $OPENSHIFT_BASE_DIR/webapps/ROOT.war"
