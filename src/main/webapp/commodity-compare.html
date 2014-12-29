@@ -136,7 +136,7 @@
                         <div class="col-md-10 col-md-offset-1">
                             <div class="panel panel-info">
                                 <div class="panel-heading">
-                                    <a class="accordion-toggle" data-toggle="collapse" href="#commodity-choice-panel">Choose Commodity to display</a>
+                                    <a class="accordion-toggle" data-toggle="collapse" href="#commodity-choice-panel">Commodity Filter:</a>
                                 </div>
 								
                                 <div class="panel-body collapse in" id="commodity-choice-panel">
@@ -150,7 +150,7 @@
                                             </span>
                                             <input type="text" class="form-control typeahead" id="commodities-typeahead" placeholder="Commodity Name" data-toggle="tooltip" data-placement="top" title="Start typing commodity name to filter list of commodities">
                                             <span class="input-group-btn">
-                                                  <button class="btn btn-info" type="button" id="commodity-show-btn" data-toggle="tooltip" data-placement="bottom" title="Show data for the commodity">Show &raquo;</button>
+                                                  <button class="btn btn-info" type="button" id="commodity-show-btn" data-toggle="tooltip" data-placement="bottom" title="Filter commodities">Filter &raquo;</button>
                                             </span>
                                           </div>
 									</div>
@@ -178,27 +178,6 @@
             </div>
         </div>
     </div>
-	<!-- Container -->
-	<div class="container">
-        
-        <div class="panel panel-info">
-            <div class="panel-heading">
-                <h3 class="panel-title"><a class="accordion-toggle" data-toggle="collapse" href="#help-panel-body" >Compare Station Prices - Help</a></h3>
-            </div>
-            <div class="panel-body collapse" id="help-panel-body">
-                <p>Compare the prices of commodites at the differenct stations
-                    available in the database</p>
-                <ul>
-                    <li>Start typeing in the name of the commodity to be displayed
-                        into the commodity input box (the list will filter as you type)</li>
-                    <li>The stations displayed can be filtered by entering in the
-                        name and adding it to the list. If the list is empty then all
-                        staitons will be shown</li>
-                    <li>To sort the colums use the sort icons on the colum header</li>
-                </ul>
-            </div>
-        </div>
-    </div>
     
     <div class="container-fluid">
 		<footer>
@@ -223,10 +202,10 @@
                 <div class="modal-body">
                     <p>Compare the prices of commodites at the differenct stations available in the database</p>
                     <ul>
-                        <li>Start typeing in the name of the commodity to be displayed
-                            into the commodity input box (the list will filter as you type)</li>
-                        <li>The stations displayed can be filtered by entering in the name into the search box</li>
-                        <li>To sort the colums use the sort icons on the colum header</li>
+                        <li>The commodities displayed can be filtered by the commodity name</li>
+                        <li>Start typing the value into the filter and the available commodities will be shown</li>
+                        <li>To sort the colums click on the column headers</li>
+                        <li>To show/hide the Filter click on the "Commoditiy Filter" panel title</li>
                     </ul>
                 </div>
                 <div class="modal-footer">

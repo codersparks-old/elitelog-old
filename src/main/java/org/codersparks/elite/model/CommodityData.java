@@ -4,8 +4,9 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.hateoas.ResourceSupport;
 
-public class CommodityData { 
+public class CommodityData extends ResourceSupport { 
 	
 	@Id
 	private String id;

@@ -19,6 +19,7 @@ $(document).ready(function() {
 	
     commodities.initialize();
 
+	updateCommodityTable("");
 	
     $('#commodities-typeahead').typeahead(null, {
        name: 'commodities',
