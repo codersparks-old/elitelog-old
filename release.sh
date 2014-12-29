@@ -36,4 +36,14 @@ git push origin elitelog-$TAG
 popd
 
 echo -e "Copying war to $OPENSHIFT_BASE_DIR/webapps/ROOT.war"
-cp $ELITELOG_BASE_DIR/target/eliitelog.war $OPENSHIFT_BASE_DIR
+cp $ELITELOG_BASE_DIR/target/elitelog.war $OPENSHIFT_BASE_DIR
+
+echo -e "\nPublishing to openshift"
+
+pushd $OPENSHIFT_BASE_DIR
+
+echo "Committing changes"
+git commit -am "Commiting changes under tag: elitelog-$TAG"
+git push
+
+popd
