@@ -1,5 +1,9 @@
 var commodityTable;
 
+var lightGreen = "#F3FFF3";
+var lightYellow = "#FFFFF3";
+var lightRed = "#FFF3F3";
+
 $(document).ready(function() {
     
     var commodities = new Bloodhound({
@@ -19,7 +23,8 @@ $(document).ready(function() {
 	
     commodities.initialize();
 
-	updateCommodityTable("");
+	// To load all the data on page load uncomment this line
+	//updateCommodityTable("");
 	
     $('#commodities-typeahead').typeahead(null, {
        name: 'commodities',
@@ -33,11 +38,22 @@ $(document).ready(function() {
 		commodities.clearPrefetchCache();
 		commodities.clearRemoteCache();
 		commodities.initialize(true);
-	})
+	});
 	
 	// Enable the tooltops on this page
-	 $('[data-toggle="tooltip"]').tooltip()
+	$('[data-toggle="tooltip"]').tooltip()
 	
+	$('.highlight-option').on('click', function() {
+		if ($(this).hasClass("btn-info")) {
+			$(this).removeClass("btn-info");
+			$(this).addClass("btn-primary");
+			$(this).addClass("highlight-on");
+		} else {
+			$(this).removeClass("btn-primary");
+			$(this).addClass("btn-info");
+			$(this).removeClass("highlight-on");
+		}
+	});
     
 	
 	$('#commodity-show-btn').on('click', function() {
@@ -72,7 +88,7 @@ var commodityToDataTable = function(sSource, aoData, fnCallback) {
 	var sortCol = paramMap.iSortCol_0;
 	var sortDir = paramMap.sSortDir_0;
 	var sortName = paramMap['mDataProp_' + sortCol];
-
+	
 	//create new json structure for parameters for REST request
 	var restParams = new Array();
 	restParams.push({
@@ -102,7 +118,14 @@ var commodityToDataTable = function(sSource, aoData, fnCallback) {
 		"url" : url,
 		"data" : restParams,
 		"success" : function(data) {
-			console.log("Commodities datatables ajax returned: " + JSON.stringify(data))
+			console.log("Commodities datatables ajax returned: " + JSON.stringify(data));
+			//commodityArray = data._embedded.commodities;
+			//for(var i = 0; i < commodityArray.length; i++) {
+			//	item = commodityArray[i];
+			//	var createdDate = new Date(item.created);
+			//	item.created = createdDate.toLocaleString("en-GB") + '<input type="hidden" class="comod-timestamp" value="' + createdDate.getTime() +'" />';
+			//}
+			//console.log("Commodities Array: " + JSON.stringify(commodityArray));
 			data.iTotalRecords = data.page.totalElements;
 			data.iTotalDisplayRecords = data.page.totalElements;
 			fnCallback(data);
@@ -113,37 +136,83 @@ var commodityToDataTable = function(sSource, aoData, fnCallback) {
 
 function updateCommodityTable(commodity) {
 	
-	console.log(commodityTable)
 	
-	if (commodityTable != undefined) {
-		commodityTable.fnDestroy();
-	}
+	
+	currentTime = Date.now();
+	
+	console.log(commodityTable)
 	
 	var url;
 	
 	if (commodity) {
 		url = "/api/commodities/search/byName?name=" + commodity;
 	} else {
-		url = "/api/commodities/";
+		alert("You must specify a commodity")
+		return
 	}
+	
+	if (commodityTable != undefined) {
+		commodityTable.fnDestroy();
+	}
+	
 	
 	console.log("Updating table for: " + commodity);
 	// Convert the commodity table into a dataTable
 	commodityTable = $('#commodity-table').dataTable({
-		"sDom" : 'R<"row"<"col-sm-6"l><"col-sm-6"C>><"row"<"col-sm-12"t>><"row"<"col-sm-6"i><"col-sm-6"p>>',
+		"sDom" : '<"row"<"col-sm-6"l><"col-sm-6"C>><"row"<"col-sm-12"t>><"row"<"col-sm-6"i><"col-sm-6"p>>',
+		"aaSorting" : [7,'Desc'],
 		"sAjaxSource" : url,
 		"sAjaxDataProp" : "_embedded.commodities",
 		"aoColumns" : [
-			{mDataProp:'station'},
-			{mDataProp:'system'},
-			{mDataProp:'name'},
-			{mDataProp:'buy'},
-			{mDataProp:'sell'},
-			{mDataProp:'supplyLevel'},
-			{mDataProp:'demandLevel'},
-			{mDataProp:'created'}
+			{mDataProp:'station', sClass:'comod-station'},
+			{mDataProp:'system', sClass:'comod-system'},
+			{mDataProp:'name', sClass:'comod-name', 'bSortable':false},
+			{mDataProp:'buy', sClass:'comod-buy'},
+			{mDataProp:'sell', sClass:'comod-sell'},
+			{mDataProp:'supplyLevel', sClass:'comod-supplyLevel'},
+			{mDataProp:'demandLevel', sClass:'comod-demandLevel'},
+			{
+				mData:'created',
+				mRender: function( data, type, full) {
+					return new Date(data).toLocaleString("en-GB")
+				},
+				sClass:'comod-created',
+				"fnCreatedCell": function (nTd, sData, oData, iRow, iCol) {
+					console.log("nTD: " +nTd);
+					
+					createdDate = new Date(sData).getTime();
+					
+					diffDate = currentTime - createdDate;
+					
+					dayMilli = 86400000;
+					
+					var bgColor;
+					
+					if (diffDate <= (2 * dayMilli)) {
+						bgColor = lightGreen;
+					} else if (diffDate <= (5 * dayMilli)) {
+						bgColor = lightYellow;
+					} else {
+						bgColor = lightRed;
+					}
+					
+					$(nTd).css("background-color", bgColor);
+					//console.log("sDate: " + sData);
+					//console.log("oDate: " + JSON.stringify(oData));
+					//console.log("iRow: " + iRow);
+					//console.log("iCol: " + iCol);
+					//timestamp = $(sData).find(".comod-timestamp").val();
+					//console.log("Timestamp: " + timestamp);
+				}
+			}
 		],
+		"bSort" : true,
 		"bServerSide" : true,
 		"fnServerData" : commodityToDataTable
 	});
+	
+	
+	// Unhide the table incase it is hidden
+	$('#commodity-table').removeAttr('hidden');
+	
 }

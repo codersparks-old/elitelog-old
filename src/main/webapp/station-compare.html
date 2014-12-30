@@ -54,8 +54,8 @@
 						data-toggle="dropdown" role="button" aria-expanded="false">Functions<span
 							class="caret"></span></a>
 						<ul class="dropdown-menu" role="menu">
-							<li class="active"><a href="/commodity-compare.html">Compare Comodity Prices</a></li>
-							<li><a href="/station-compare.html">Compare Station Prices</a></li>
+							<li><a href="/commodity-compare.html">Compare Comodity Prices</a></li>
+							<li class="active"><a href="/station-compare.html">Compare Station Prices</a></li>
 							<li><a href="/most-profit.html">Most profitable trade route</a></li>
 						</ul></li>
 					<li><a href="#" data-toggle="modal" data-target="#aboutModal">About</a></li>
@@ -128,61 +128,46 @@
                 <div class="panel panel-primary" id="data-panel">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-xs-11"><h3 class="panel-title">Compare Commodities</h3></div>
-                            <div class="col-xs-1" id="commodities-help"><span style="float: right" class="glyphicon glyphicon-question-sign"></apan></div>
+                            <div class="col-xs-11"><h3 class="panel-title">Compare Stations</h3></div>
+                            <div class="col-xs-1" id="stations-help"><span style="float: right" class="glyphicon glyphicon-question-sign"></apan></div>
                         </div>
                     </div>
                     <div class="panel-body collapse in" id="config-panel-body">
                         <div class="col-md-10 col-md-offset-1">
                             <div class="panel panel-info">
                                 <div class="panel-heading">
-                                    <a class="accordion-toggle" data-toggle="collapse" href="#commodity-choice-panel">Commodity Filter:</a>
+                                    <a class="accordion-toggle" data-toggle="collapse" href="#station-choice-panel">Station Filter:</a>
                                 </div>
 								
-                                <div class="panel-body collapse in" id="commodity-choice-panel">
+                                <div class="panel-body collapse in" id="station-choice-panel">
 									<div class="form-group">
-										  <label for="commodities-typeahead">Commodity</label>
+										  <label for="station-typeahead">Station</label>
                                           <div class="input-group">
                                             <span class="input-group-btn">
-                                                  <button class="btn btn-info" type="button" id="commodity-refresh-btn" aria-label="refresh commodity list" data-toggle="tooltip" data-placement="bottom" title="Reload the list of commodities">
+                                                  <button class="btn btn-info" type="button" id="station-refresh-btn" aria-label="refresh station list" data-toggle="tooltip" data-placement="bottom" title="Reload the list of stations">
                                                     <span class="glyphicon glyphicon-refresh"></span>
                                                   </button>
                                             </span>
-                                            <input type="text" class="form-control typeahead" id="commodities-typeahead" placeholder="Commodity Name" data-toggle="tooltip" data-placement="top" title="Start typing commodity name to filter list of commodities">
-                                            
+                                            <input type="text" class="form-control typeahead" id="station-typeahead" placeholder="Station Name" data-toggle="tooltip" data-placement="top" title="Start typing station name to add to list of stations">
+                                            <span class="input-group-btn">
+                                                  <button class="btn btn-info" type="button" id="station-show-btn" data-toggle="tooltip" data-placement="bottom" title="Show details for stations">Filter &raquo;</button>
+                                            </span>
                                           </div>
-                                          <br />
-                                          <label for="commodities-formatting">Highlighting Options</label>
-                                          <div id="commodities-formatting" class="btn-group btn-group-justified" role="group" aria-label="Highlighting options">
-                                            <div class="btn-group" role="group" >
-                                                <button type="button" id="comod-highlight-created-btn" class="btn btn-info highlight-option" data-toggle="tooltip" data=palcement="bottom" title="Hightlight how old the data is">Created</button>
-                                            </div>
-                                            <div class="btn-group" role="group">
-                                                <button type="button" id="comod-highlight-supply-btn" class="btn btn-info highlight-option">Supply</button>
-                                            </div>
-                                            <div class="btn-group" role="group">
-                                                <button type="button" id="comod-highlight-demand-btn" class="btn btn-info highlight-option">Demand</button>
-                                            </div>
-                                          </div>
-                                          <br />
-                                          <button class="btn btn-info" type="button" id="commodity-show-btn" data-toggle="tooltip" data-placement="bottom" title="View commodities">Refresh Table &raquo;</button>
-
-                                          
 									</div>
                                 </div>
                             </div>
                         </div>
 					</div>
-                        <table id="commodity-table" class="table table-striped table-bordered" cellspacing="0" width="100%" hidden="true">
+                        <table id="commodity-table" class="display table table-striped" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                    <th>Station</th>
-                                    <th>System</th>
-                                    <th>Commodity</th>
-                                    <th>Buy</th>
-                                    <th>Sell</th>
-                                    <th>Supply Level</th>
-                                    <th>Demand Level</th>
+                                    <th>station</th>
+                                    <th>system</th>
+                                    <th>commodity</th>
+                                    <th>buy</th>
+                                    <th>sell</th>
+                                    <th>supply level</th>
+                                    <th>demand level</th>
                                     <th>Timestamp</th>
                                 </tr>
                             </thead>
@@ -215,12 +200,9 @@
                     <h4 class="modal-title" id="myModalLabel">Help</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Compare the prices of commodites at the differenct stations available in the database</p>
+                    <p>Compare the prices of commodites at the selected stations available in the database</p>
                     <ul>
-                        <li>The commodities displayed can be filtered by the commodity name</li>
-                        <li>Start typing the value into the filter and the available commodities will be shown</li>
-                        <li>To sort the colums click on the column headers. To sort by a second column shift+click that column</li>
-                        <li>To show/hide the Filter click on the "Commoditiy Filter" panel title</li>
+                        <li></li>
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -243,6 +225,6 @@
     <!-- Load the site js -->
     <script src="js/site.js"></script>
     <!-- Load the page specific js -->
-    <script src="js/commodity-compare.js"></script>            
+    <script src="js/station-compare.js"></script>            
 </body>
 </html>

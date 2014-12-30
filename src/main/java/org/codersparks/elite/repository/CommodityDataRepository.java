@@ -15,15 +15,15 @@ public interface CommodityDataRepository extends
 		MongoRepository<CommodityData, String> {
 
 	@RestResource(rel = "findByStation", path = "byStation")
-	Page<CommodityData> findByStationIgnoreCaseOrderByCreatedDesc(
+	Page<CommodityData> findByStationIgnoreCase(
 			@Param("station") String station, Pageable pageable);
 
 	@RestResource(rel = "bySystem", path = "bySystem")
-	Page<CommodityData> findBySystemIgnoreCaseOrderByCreatedDesc(
+	Page<CommodityData> findBySystemIgnoreCase(
 			@Param("system") String system, Pageable pageable);
 
 	@RestResource(rel = "byName", path = "byName")
-	Page<CommodityData> findByNameIgnoreCaseOrderByCreatedDesc(
+	Page<CommodityData> findByNameIgnoreCase(
 			@Param("name") String name, Pageable pageable);
 
 	@RestResource(rel = "byDemandLevel", path = "byDemandLevel")
@@ -35,12 +35,12 @@ public interface CommodityDataRepository extends
 			@Param("level") Collection<String> supplyLevel, Pageable pageable);
 
 	@RestResource(rel = "byNameAndStation", path = "byNameAndStation")
-	Page<CommodityData> findByNameIgnoreCaseAndStationInOrderByCreatedDesc(
+	Page<CommodityData> findByNameIgnoreCaseAndStationIn(
 			@Param("name") String name,
 			@Param("station") Collection<String> station, Pageable pageable);
 	
 	@RestResource(rel = "byNameAndSystem", path = "byNameAndSystem")
-	Page<CommodityData> findByNameIgnoreCaseAndSystemInOrderByCreatedDesc(
+	Page<CommodityData> findByNameIgnoreCaseAndSystemIn(
 			@Param("name") String name,
 			@Param("system") Collection<String> system, Pageable pageable);
 
