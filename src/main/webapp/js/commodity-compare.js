@@ -168,8 +168,9 @@ function updateCommodityTable(commodity) {
 			{mDataProp:'system', sClass:'comod-system'},
 			{mDataProp:'name', sClass:'comod-name', 'bSortable':false},
 			{mDataProp:'buy', sClass:'comod-buy'},
-			{mDataProp:'sell', sClass:'comod-sell'},
 			{mDataProp:'supplyLevel', sClass:'comod-supplyLevel'},
+			{mDataProp:'sell', sClass:'comod-sell'},
+			
 			{mDataProp:'demandLevel', sClass:'comod-demandLevel'},
 			{
 				mData:'created',
