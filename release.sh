@@ -30,6 +30,11 @@ echo -e "\nBuilding elite log..."
 
 mvn clean package
 
+if [[ $? != 0 ]]
+then
+  echo "Maven return non zero exit code"
+  exit 1
+fi
 echo -e "\nTagging repository with tag 'elitelog-$TAG'"
 git tag -a "elitelog-$TAG" -m "Adding tag: elitelog-$TAG"
 git push origin elitelog-$TAG 
