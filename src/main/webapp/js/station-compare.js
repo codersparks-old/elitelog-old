@@ -16,49 +16,6 @@ $(document).ready(function() {
     
     getStationList();
     
-    
-   
-//    var stationsBloodhound = new Bloodhound({
-//        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-//        queryTokenizer: Bloodhound.tokenizers.whitespace,
-//        limit: 20,
-//        prefetch: {
-//            url: '/api/stations/distinct',
-//            filter: function(response) {
-//                //console.log(list['commodities'])
-//                
-//                return $.map(response['stations'], function(station) { return { name: station }; });
-//            },
-//			ttl: 60000
-//        }
-//    });
-//    
-//    stationsBloodhound.initialize();
-//    
-//    $('#stations-typeahead').typeahead(
-//        {
-//            hint: true,
-//            highlight: true,
-//            limit: 1,
-//        },
-//        {
-//        name: 'stations',
-//        displayKey: 'name',
-//        source: stationsBloodhound.ttAdapter()
-//    });
-//    
-//    // Give the user the option to refresh the data list
-//	$('#station-refresh-btn').on('click', function() {
-//		console.log("Refresh pressed");
-//        
-//		stationsBloodhound.clearPrefetchCache();
-//		stationsBloodhound.clearRemoteCache();
-//        stationsBloodhound.initialize(true);
-//	});
-    
-    
-
-
     $('#station-refresh-btn').on('click', function() {
         console.log("Refresh pressed");
         console.log(stationList);
@@ -100,21 +57,27 @@ var initialiseStationTypeAhead = function() {
 
 function updateTable(stationList) {
 	console.log("2StationList: " + stationList)
-	$.ajax({
-        type: "POST",
-        url: "/api/commodities/stationPricePerCommodity"
-    }).done(function(data) {
-        generateTable(stationList, data);
-    });
+	
+	generateTableHtml(stationList);
+	
+	dataTableConfig = buildDataTablesConfig(stationList);
+	
+	console.log(dataTableConfig);
+	
+//	$.ajax({
+//        type: "POST",
+//        url: "/api/commodities/stationPricePerCommodity"
+//    }).done(function(data) {
+//        generateTable(stationList, data);
+//    });
 };
 
-function generateTable(stationList, data) {
+function generateTableHtml(stationList) {
 	
 	$('#data-table').empty();
 	
-	commodityDetails = data.content;
-	console.log(commodityDetails);
-	console.log("3StationList: " + stationList);
+	
+	
 	// Generate headers
 	header = '<thead><tr><th rowspan=2>Commodity</th>';
 	
@@ -135,8 +98,14 @@ function generateTable(stationList, data) {
 	$('#data-table').append(table);
 	$('#data-table').removeAttr('hidden');
 	
+};
+
+function buildDataTablesConfig(stationList) {
+	var retVal = {};
+	
+	retVal["sDom"] = '<"row"<"col-sm-6"l><"col-sm-6"C>><"row"<"col-sm-12"t>><"row"<"col-sm-6"i><"col-sm-6"p>>';
 	
 	
-	console.log(header)
-	
+	return retVal;
+		
 }

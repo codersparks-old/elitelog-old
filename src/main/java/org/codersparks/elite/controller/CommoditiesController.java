@@ -3,17 +3,23 @@ package org.codersparks.elite.controller;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.codersparks.elite.aggregation.AggregationHelper;
 import org.codersparks.elite.resource.CommodityPerStationResult;
 import org.codersparks.elite.resource.DistinctCommodities;
+import org.codersparks.elite.resource.pricePerStation.CommodityDetail;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.mapreduce.MapReduceOptions;
+import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
 import org.springframework.data.rest.webmvc.RepositoryLinksResource;
 import org.springframework.hateoas.ExposesResourceFor;
-import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
@@ -35,6 +41,9 @@ import com.mongodb.DBObject;
 public class CommoditiesController implements
 		ResourceProcessor<RepositoryLinksResource> {
 
+	private static Logger logger = LoggerFactory
+			.getLogger(CommoditiesController.class);
+
 	@Autowired
 	MongoTemplate mongoTemplate;
 
@@ -45,8 +54,8 @@ public class CommoditiesController implements
 	@ResponseBody
 	public HttpEntity<DistinctCommodities> distinctCommodities() {
 
-		List<String> distinctList = mongoTemplate.getCollection("commodityData")
-				.distinct("name");
+		List<String> distinctList = mongoTemplate
+				.getCollection("commodityData").distinct("name");
 
 		DistinctCommodities resource = new DistinctCommodities(distinctList);
 		resource.add(linkTo(
@@ -59,33 +68,40 @@ public class CommoditiesController implements
 	@ResponseBody
 	public HttpEntity<Resources<CommodityPerStationResult>> stationPricesPerCommodity() {
 
-//		DB db = mongoClient.getDB("elitelog");
-//		
-//		db.authenticate(username, password)
-		
+		// DB db = mongoClient.getDB("elitelog");
+		//
+		// db.authenticate(username, password)
+
 		DBCollection collection = mongoDB.getCollection("commodityData");
-		
+
 		List<DBObject> aggregationCommands = new ArrayList<DBObject>();
-		
-		aggregationCommands.add(AggregationHelper.sortByCreatedAggregationItem());
+
+		aggregationCommands.add(AggregationHelper
+				.sortByCreatedAggregationItem());
 		aggregationCommands.add(AggregationHelper.groupByNameAndStation());
-		aggregationCommands.add(AggregationHelper.groupByNameForStationPrices());
+		aggregationCommands
+				.add(AggregationHelper.groupByNameForStationPrices());
 		aggregationCommands.add(AggregationHelper.sortByNameAggregationItem());
-		
-		AggregationOutput aggregationOutput = collection.aggregate(aggregationCommands);
-		
+
+		AggregationOutput aggregationOutput = collection
+				.aggregate(aggregationCommands);
+
 		List<CommodityPerStationResult> results = new ArrayList<CommodityPerStationResult>();
-		
-		for(DBObject o : aggregationOutput.results()) {
-			
-			CommodityPerStationResult c = mongoTemplate.getConverter().read(CommodityPerStationResult.class, o);
+
+		for (DBObject o : aggregationOutput.results()) {
+
+			CommodityPerStationResult c = mongoTemplate.getConverter().read(
+					CommodityPerStationResult.class, o);
 			results.add(c);
 			System.out.println(c.toString());
 		}
-		
-		Resources<CommodityPerStationResult> resource = new Resources<CommodityPerStationResult>(results, 
-				linkTo(methodOn(CommoditiesController.class).stationPricesPerCommodity()).withRel("commodityPricePerStation"));
-		
+
+		Resources<CommodityPerStationResult> resource = new Resources<CommodityPerStationResult>(
+				results, linkTo(
+						methodOn(CommoditiesController.class)
+								.stationPricesPerCommodity()).withRel(
+						"commodityPricePerStation"));
+
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
 		HttpEntity<Resources<CommodityPerStationResult>> entity = new HttpEntity<Resources<CommodityPerStationResult>>(
@@ -94,11 +110,46 @@ public class CommoditiesController implements
 		return entity;
 
 	}
-	
-	public HttpEntity<String> commodityPricePerStation() {
+
+	@RequestMapping("/api/commodities/pricePerStation")
+	@ResponseBody
+	public HttpEntity<Resources<CommodityDetail>> commodityPricePerStation() throws Exception {
+
+		String mapFunction = IOUtils.toString(this.getClass().getClassLoader()
+				.getResourceAsStream("CommodityPerStationMapFunction.js"));
+		logger.debug("Map Function: " + mapFunction);
+
+		String reduceFunction = IOUtils.toString(this.getClass()
+				.getClassLoader()
+				.getResourceAsStream("CommodityPerStationReduceFunction.js"));
+		logger.debug("Reduce Function: " + reduceFunction);
+
+		String finalizeFunction = IOUtils.toString(this.getClass()
+				.getClassLoader()
+				.getResourceAsStream("CommodityPerStationFinalizeFunction.js"));
+		logger.debug("Finalize Function: " + finalizeFunction);
+
+		MapReduceOptions mapReduceOptions = MapReduceOptions.options()
+				.outputTypeInline().finalizeFunction(finalizeFunction);
+
+		MapReduceResults<CommodityDetail> mapReduceResults = mongoTemplate
+				.mapReduce("commodityData", mapFunction, reduceFunction,
+						mapReduceOptions, CommodityDetail.class);
+
+		List<CommodityDetail> resultsList = new ArrayList<CommodityDetail>();
+		for (CommodityDetail result : mapReduceResults) {
+				logger.debug("Result object.toString(): " + result.toString());
+				resultsList.add(result);
+				
+		}
 		
-		
-		
+		Resources<CommodityDetail> resource = new Resources<CommodityDetail>(resultsList, 
+				linkTo(methodOn(CommoditiesController.class).commodityPricePerStation()).withSelfRel());
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
+		HttpEntity<Resources<CommodityDetail>> entity = new HttpEntity<Resources<CommodityDetail>>(resource, headers);
+		return entity;
 	}
 
 	@Override
