@@ -3,6 +3,7 @@ package org.codersparks.elite.controller;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,110 +63,120 @@ public class CommoditiesController implements
 		return new ResponseEntity<DistinctCommodities>(resource, HttpStatus.OK);
 	}
 
-/*	@RequestMapping("/api/commodities/stationPricePerCommodity")
-	@ResponseBody
-	public HttpEntity<Resources<CommodityPerStationResult>> stationPricesPerCommodity() {
+	/*
+	 * @RequestMapping("/api/commodities/stationPricePerCommodity")
+	 * 
+	 * @ResponseBody public HttpEntity<Resources<CommodityPerStationResult>>
+	 * stationPricesPerCommodity() {
+	 * 
+	 * // DB db = mongoClient.getDB("elitelog"); // // db.authenticate(username,
+	 * password)
+	 * 
+	 * DBCollection collection = mongoDB.getCollection("commodityData");
+	 * 
+	 * List<DBObject> aggregationCommands = new ArrayList<DBObject>();
+	 * 
+	 * aggregationCommands.add(AggregationHelper
+	 * .sortByCreatedAggregationItem());
+	 * aggregationCommands.add(AggregationHelper.groupByNameAndStation());
+	 * aggregationCommands
+	 * .add(AggregationHelper.groupByNameForStationPrices());
+	 * aggregationCommands.add(AggregationHelper.sortByNameAggregationItem());
+	 * 
+	 * AggregationOutput aggregationOutput = collection
+	 * .aggregate(aggregationCommands);
+	 * 
+	 * List<CommodityPerStationResult> results = new
+	 * ArrayList<CommodityPerStationResult>();
+	 * 
+	 * for (DBObject o : aggregationOutput.results()) {
+	 * 
+	 * CommodityPerStationResult c = mongoTemplate.getConverter().read(
+	 * CommodityPerStationResult.class, o); results.add(c);
+	 * System.out.println(c.toString()); }
+	 * 
+	 * Resources<CommodityPerStationResult> resource = new
+	 * Resources<CommodityPerStationResult>( results, linkTo(
+	 * methodOn(CommoditiesController.class)
+	 * .stationPricesPerCommodity()).withRel( "commodityPricePerStation"));
+	 * 
+	 * HttpHeaders headers = new HttpHeaders(); headers.add("Content-Type",
+	 * MediaType.APPLICATION_JSON_VALUE);
+	 * HttpEntity<Resources<CommodityPerStationResult>> entity = new
+	 * HttpEntity<Resources<CommodityPerStationResult>>( resource, headers);
+	 * 
+	 * return entity;
+	 * 
+	 * }
+	 */
 
-		// DB db = mongoClient.getDB("elitelog");
-		//
-		// db.authenticate(username, password)
-
-		DBCollection collection = mongoDB.getCollection("commodityData");
-
-		List<DBObject> aggregationCommands = new ArrayList<DBObject>();
-
-		aggregationCommands.add(AggregationHelper
-				.sortByCreatedAggregationItem());
-		aggregationCommands.add(AggregationHelper.groupByNameAndStation());
-		aggregationCommands
-				.add(AggregationHelper.groupByNameForStationPrices());
-		aggregationCommands.add(AggregationHelper.sortByNameAggregationItem());
-
-		AggregationOutput aggregationOutput = collection
-				.aggregate(aggregationCommands);
-
-		List<CommodityPerStationResult> results = new ArrayList<CommodityPerStationResult>();
-
-		for (DBObject o : aggregationOutput.results()) {
-
-			CommodityPerStationResult c = mongoTemplate.getConverter().read(
-					CommodityPerStationResult.class, o);
-			results.add(c);
-			System.out.println(c.toString());
-		}
-
-		Resources<CommodityPerStationResult> resource = new Resources<CommodityPerStationResult>(
-				results, linkTo(
-						methodOn(CommoditiesController.class)
-								.stationPricesPerCommodity()).withRel(
-						"commodityPricePerStation"));
-
-		HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-		HttpEntity<Resources<CommodityPerStationResult>> entity = new HttpEntity<Resources<CommodityPerStationResult>>(
-				resource, headers);
-
-		return entity;
-
-	}*/
-
-	
 	@RequestMapping("/api/commodities/pagedPricePerStation")
 	@ResponseBody
-	public PagedResources<Resource<CommodityDetail>> commodityPricePerStation(@Param("page") Long page, @Param("size") Long size) throws Exception {
-		
+	public PagedResources<Resource<CommodityDetail>> commodityPricePerStation(
+			@Param("page") Long page, @Param("size") Long size)
+			throws Exception {
+
 		logger.info("Page: " + page + " Size: " + size);
-		
-		if(page == null) {
+
+		if (page == null) {
 			logger.debug("Page detected as null, setting to 1");
 			page = 0l;
 		}
-		
-		if(size == null) {
+
+		if (size == null) {
 			logger.debug("Size detected as null, setting to 20");
 			size = 20l;
 		}
-		String mapFunction = IOUtils.toString(this.getClass().getClassLoader()
-				.getResourceAsStream("CommodityPerStationMapFunction.js"));
-		logger.debug("Map Function: " + mapFunction);
 
-		String reduceFunction = IOUtils.toString(this.getClass()
-				.getClassLoader()
-				.getResourceAsStream("CommodityPerStationReduceFunction.js"));
-		logger.debug("Reduce Function: " + reduceFunction);
+		InputStream mapStream = this.getClass().getClassLoader()
+				.getResourceAsStream("CommodityPerStationMapFunction.js");
+		InputStream reduceStream = this.getClass().getClassLoader()
+				.getResourceAsStream("CommodityPerStationReduceFunction.js");
+		InputStream finalizeStream = this.getClass().getClassLoader()
+				.getResourceAsStream("CommodityPerStationFinalizeFunction.js");
 
-		String finalizeFunction = IOUtils.toString(this.getClass()
-				.getClassLoader()
-				.getResourceAsStream("CommodityPerStationFinalizeFunction.js"));
-		logger.debug("Finalize Function: " + finalizeFunction);
+		try {
+			String mapFunction = IOUtils.toString(mapStream);
+			logger.debug("Map Function: " + mapFunction);
 
-		MapReduceOptions mapReduceOptions = MapReduceOptions.options()
-				.outputTypeInline().finalizeFunction(finalizeFunction);
+			String reduceFunction = IOUtils.toString(reduceStream);
+			logger.debug("Reduce Function: " + reduceFunction);
 
-		MapReduceResults<CommodityDetail> mapReduceResults = mongoTemplate
-				.mapReduce("commodityData", mapFunction, reduceFunction,
-						mapReduceOptions, CommodityDetail.class);
+			String finalizeFunction = IOUtils.toString(finalizeStream);
+			logger.debug("Finalize Function: " + finalizeFunction);
 
-		List<CommodityDetail> resultsList = new ArrayList<CommodityDetail>();
-		for (CommodityDetail result : mapReduceResults) {
+			MapReduceOptions mapReduceOptions = MapReduceOptions.options()
+					.outputTypeInline().finalizeFunction(finalizeFunction);
+
+			MapReduceResults<CommodityDetail> mapReduceResults = mongoTemplate
+					.mapReduce("commodityData", mapFunction, reduceFunction,
+							mapReduceOptions, CommodityDetail.class);
+
+			List<CommodityDetail> resultsList = new ArrayList<CommodityDetail>();
+			for (CommodityDetail result : mapReduceResults) {
 				logger.debug("Result object.toString(): " + result.toString());
 				resultsList.add(result);
-				
+
+			}
+
+			PageMetadata meta = new PageMetadata(size, page, resultsList.size());
+
+			PagedResources<Resource<CommodityDetail>> resources = PagedResources
+					.wrap(resultsList, meta);
+
+			return resources;
+
+		} finally {
+			mapStream.close();
+			reduceStream.close();
+			finalizeStream.close();
 		}
-		
-		PageMetadata meta = new PageMetadata(size, page, resultsList.size() );
-		
-		PagedResources<Resource<CommodityDetail>> resources = PagedResources.wrap(resultsList, meta);
-		
-		
-		
-		return resources;
 	}
-	
-	
+
 	@RequestMapping("/api/commodities/pricePerStation")
 	@ResponseBody
-	public HttpEntity<Resources<CommodityDetail>> commodityPricePerStation() throws Exception {
+	public HttpEntity<Resources<CommodityDetail>> commodityPricePerStation()
+			throws Exception {
 
 		String mapFunction = IOUtils.toString(this.getClass().getClassLoader()
 				.getResourceAsStream("CommodityPerStationMapFunction.js"));
@@ -190,17 +201,20 @@ public class CommoditiesController implements
 
 		List<CommodityDetail> resultsList = new ArrayList<CommodityDetail>();
 		for (CommodityDetail result : mapReduceResults) {
-				logger.debug("Result object.toString(): " + result.toString());
-				resultsList.add(result);
-				
+			logger.debug("Result object.toString(): " + result.toString());
+			resultsList.add(result);
+
 		}
-		
-		Resources<CommodityDetail> resource = new Resources<CommodityDetail>(resultsList, 
-				linkTo(methodOn(CommoditiesController.class).commodityPricePerStation()).withSelfRel());
+
+		Resources<CommodityDetail> resource = new Resources<CommodityDetail>(
+				resultsList, linkTo(
+						methodOn(CommoditiesController.class)
+								.commodityPricePerStation()).withSelfRel());
 
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-		HttpEntity<Resources<CommodityDetail>> entity = new HttpEntity<Resources<CommodityDetail>>(resource, headers);
+		HttpEntity<Resources<CommodityDetail>> entity = new HttpEntity<Resources<CommodityDetail>>(
+				resource, headers);
 		return entity;
 	}
 
@@ -211,7 +225,8 @@ public class CommoditiesController implements
 				.withRel("distinctCommoditiesList"));
 		try {
 			resource.add(linkTo(
-					methodOn(CommoditiesController.class).commodityPricePerStation()).withRel(
+					methodOn(CommoditiesController.class)
+							.commodityPricePerStation()).withRel(
 					"pricePerCommodity"));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
