@@ -1,3 +1,25 @@
+var lightGreen = "#F3FFF3";
+var lightYellow = "#FFFFF3";
+var lightRed = "#FFF3F3";
+
+$(document).ready(function() { 
+	// Enable the tooltops on this page
+	$('[data-toggle="tooltip"]').tooltip();
+	
+	$('.highlight-option').on('click', function() {
+		if ($(this).hasClass("btn-info")) {
+			$(this).removeClass("btn-info");
+			$(this).addClass("btn-primary");
+			$(this).addClass("highlight-on");
+		} else {
+			$(this).removeClass("btn-primary");
+			$(this).addClass("btn-info");
+			$(this).removeClass("highlight-on");
+		}
+	});
+});
+
+
 var datatable2Rest = function(sSource, aoData, fnCallback) {
 
 			//extract name/value pairs into a simpler map for use later

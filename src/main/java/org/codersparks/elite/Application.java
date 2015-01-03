@@ -1,5 +1,7 @@
 package org.codersparks.elite;
 
+import java.net.UnknownHostException;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -11,8 +13,8 @@ import org.springframework.data.mongodb.MongoDbFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration;
 
+import com.mongodb.DB;
 import com.mongodb.Mongo;
 import com.mongodb.MongoClient;
 
@@ -25,6 +27,17 @@ public class Application {
 
 	@Bean
 	public MongoTemplate mongoTemplate() throws Exception {
+		MongoDbFactory mongoDbFactory = getFactory();
+		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory);
+		return mongoTemplate;
+	}
+	
+	@Bean
+	public DB mongoDB() throws Exception {
+		return getFactory().getDb();
+	}
+	
+	private static MongoDbFactory getFactory() throws Exception {
 		String openshiftMongoDbHost = System
 				.getenv("OPENSHIFT_MONGODB_DB_HOST");
 		int openshiftMongoDbPort = Integer.parseInt(System
@@ -37,8 +50,7 @@ public class Application {
 		String databaseName = System.getenv("OPENSHIFT_APP_NAME");
 		MongoDbFactory mongoDbFactory = new SimpleMongoDbFactory(mongo,
 				databaseName, userCredentials);
-		MongoTemplate mongoTemplate = new MongoTemplate(mongoDbFactory);
-		return mongoTemplate;
+		return mongoDbFactory;
 	}
 	
 

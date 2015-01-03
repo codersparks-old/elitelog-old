@@ -22,3 +22,36 @@ footer {
     content: "\e080";    /* adjust as needed, taken from bootstrap.css */
 }
 
+#data-table th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+
+/* MagicSuggest Override */
+.ms-ctn .ms-sel-item {
+  background: #ffb399;
+  color: #992600;
+  font-size: 14px;
+  margin: 0px 5px 0px 0;
+  padding-left: 3px
+  border: 1px solid #ff8175;
+}
+
+
+.ms-res-ctn .ms-res-item em {
+  background: #ff4000;
+  color: #ffffff;
+}
+
+.ms-res-ctn .ms-res-item {
+  color: #555;  
+}
+
+
+.ms-res-ctn .ms-res-item-active {
+  background: #ff4000;
+  color: #fff;
+}
+
+/* MagicSuggest */

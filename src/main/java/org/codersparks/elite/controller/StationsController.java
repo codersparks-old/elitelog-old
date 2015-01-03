@@ -36,6 +36,9 @@ public class StationsController implements ResourceProcessor<RepositoryLinksReso
 		return new ResponseEntity<DistinctStation>(resource, HttpStatus.OK);
 	}
 	
+	
+	
+	
 	@Override
 	public RepositoryLinksResource process(RepositoryLinksResource resource) {
 		resource.add(linkTo(methodOn(StationsController.class).distinctStations()).withRel("stationsList"));

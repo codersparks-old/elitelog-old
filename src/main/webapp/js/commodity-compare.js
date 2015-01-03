@@ -1,21 +1,19 @@
 var commodityTable;
 
-var lightGreen = "#F3FFF3";
-var lightYellow = "#FFFFF3";
-var lightRed = "#FFF3F3";
+
 
 $(document).ready(function() {
     
     var commodities = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
         queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 10,
+        limit: 20,
         prefetch: {
             url: '/api/commodities/distinct',
             filter: function(response) {
                 //console.log(list['commodities'])
                 
-                return $.map(response['commodities'], function(country) { return { name: country }; });
+                return $.map(response['commodities'], function(commodityValue) { return { name: commodityValue }; });
             },
 			ttl: 60000
         }
@@ -40,22 +38,6 @@ $(document).ready(function() {
 		commodities.initialize(true);
 	});
 	
-	// Enable the tooltops on this page
-	$('[data-toggle="tooltip"]').tooltip()
-	
-	$('.highlight-option').on('click', function() {
-		if ($(this).hasClass("btn-info")) {
-			$(this).removeClass("btn-info");
-			$(this).addClass("btn-primary");
-			$(this).addClass("highlight-on");
-		} else {
-			$(this).removeClass("btn-primary");
-			$(this).addClass("btn-info");
-			$(this).removeClass("highlight-on");
-		}
-	});
-    
-	
 	$('#commodity-show-btn').on('click', function() {
 		updateCommodityTable($('#commodities-typeahead').val());
 	});
@@ -65,9 +47,6 @@ $(document).ready(function() {
 		console.log("Help button pressed");
 		$('#helpModal').modal()
 	});
-	
-	
-	
 	
 });
 

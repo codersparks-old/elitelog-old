@@ -20,6 +20,7 @@
 <link href="external/datatables/css/dataTables.bootstrap.css" rel="stylesheet">
 <link href="external/datatables/css/dataTables.colVis.css" rel="stylesheet">
 
+<link href="external/magicsuggest/magicsuggest-min.css" rel="stylesheet">
     
 <!-- Site CSS -->
 <link href="css/site.css" rel="stylesheet">
@@ -128,53 +129,56 @@
                 <div class="panel panel-primary" id="data-panel">
                     <div class="panel-heading">
                         <div class="row">
-                            <div class="col-xs-11"><h3 class="panel-title">Compare Stations</h3></div>
-                            <div class="col-xs-1" id="stations-help"><span style="float: right" class="glyphicon glyphicon-question-sign"></apan></div>
+                            <div class="col-xs-11"><h3 class="panel-title">Prices for commodities at station</h3></div>
+                            <div class="col-xs-1" id="help-icon"><span style="float: right" class="glyphicon glyphicon-question-sign"></apan></div>
                         </div>
                     </div>
                     <div class="panel-body collapse in" id="config-panel-body">
                         <div class="col-md-10 col-md-offset-1">
                             <div class="panel panel-info">
                                 <div class="panel-heading">
-                                    <a class="accordion-toggle" data-toggle="collapse" href="#station-choice-panel">Station Filter:</a>
+                                    <a class="accordion-toggle" data-toggle="collapse" href="#station-choice-panel">Configuration:</a>
                                 </div>
 								
                                 <div class="panel-body collapse in" id="station-choice-panel">
 									<div class="form-group">
-										  <label for="station-typeahead">Station</label>
+										  <label for="stations-typeahead">Stations (Max 5)</label>
                                           <div class="input-group">
                                             <span class="input-group-btn">
-                                                  <button class="btn btn-info" type="button" id="station-refresh-btn" aria-label="refresh station list" data-toggle="tooltip" data-placement="bottom" title="Reload the list of stations">
-                                                    <span class="glyphicon glyphicon-refresh"></span>
+                                                  <button class="btn btn-info" type="button" id="station-refresh-btn" aria-label="refresh station list" data-toggle="tooltip" data-placement="bottom" title="Reload the list of stations">                                                    <span class="glyphicon glyphicon-refresh"></span>
                                                   </button>
                                             </span>
-                                            <input type="text" class="form-control typeahead" id="station-typeahead" placeholder="Station Name" data-toggle="tooltip" data-placement="top" title="Start typing station name to add to list of stations">
-                                            <span class="input-group-btn">
-                                                  <button class="btn btn-info" type="button" id="station-show-btn" data-toggle="tooltip" data-placement="bottom" title="Show details for stations">Filter &raquo;</button>
-                                            </span>
+                                            <input type="text" class="form-control typeahead" id="stations-typeahead" placeholder="Station Name(s)" data-toggle="tooltip" data-placement="top" title="Start typing station name to filter list of stations">
+                                            
                                           </div>
+                                          <!-- TODO Either change or remove highlighting options
+                                          <br />
+                                          <label for="commodities-formatting">Highlighting Options</label>
+                                          <div id="commodities-formatting" class="btn-group btn-group-justified" role="group" aria-label="Highlighting options">
+                                            <div class="btn-group" role="group" >
+                                                <button type="button" id="comod-highlight-created-btn" class="btn btn-info highlight-option" data-toggle="tooltip" data=palcement="bottom" title="Hightlight how old the data is">Created</button>
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" id="comod-highlight-supply-btn" class="btn btn-info highlight-option">Supply</button>
+                                            </div>
+                                            <div class="btn-group" role="group">
+                                                <button type="button" id="comod-highlight-demand-btn" class="btn btn-info highlight-option">Demand</button>
+                                            </div>
+                                          </div>
+                                          -->
+                                          <br />
+                                          <button class="btn btn-info" type="button" id="station-update-btn" data-toggle="tooltip" data-placement="bottom" title="View Prices Per Station">Update &raquo;</button>
+
+                                          
 									</div>
                                 </div>
                             </div>
                         </div>
 					</div>
-                        <table id="commodity-table" class="display table table-striped" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>station</th>
-                                    <th>system</th>
-                                    <th>commodity</th>
-                                    <th>buy</th>
-                                    <th>sell</th>
-                                    <th>supply level</th>
-                                    <th>demand level</th>
-                                    <th>Timestamp</th>
-                                </tr>
-                            </thead>
+                        <table id="data-table" class="table table-striped table-bordered" cellspacing="0" width="100%" hidden="true">
                         </table>
-                    </div>
-                    </div>
                 </div>
+            
             </div>
         </div>
     </div>
@@ -200,9 +204,18 @@
                     <h4 class="modal-title" id="myModalLabel">Help</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Compare the prices of commodites at the selected stations available in the database</p>
+                    <p>Compare the prices of commodites at the differenct stations available in the database</p>
                     <ul>
-                        <li></li>
+                        <li>TODO</li>
+                        <li>Start typing the name of the station to show available options</li>
+                        <li>You can only compare upto 3 stations at a time</li>
+                        <li>If the number of stations in the database is &lt;= 3 then they will be automatically selected  </li>
+                        <!--
+                        <li>Start typing the value into the filter and the available commodities will be shown</li>
+                        <li>As the list of commodities used to populate the commodity list are cached, click the refresh button if the commoditiy you are looking for does not appear</li>
+                        <li>To sort the colums click on the column headers.</li>
+                        <li>To show/hide the Filter click on the "Commoditiy Filter" panel title</li>
+                        -->
                     </ul>
                 </div>
                 <div class="modal-footer">
@@ -221,7 +234,7 @@
     <script src="external/datatables/js/dataTables.bootstrap.min.js"></script>
     <script src="external/datatables/js/dataTables.colVis.js"></script>
     <script src="external/datatables/js/dataTables.colReorder.js"></script>
-    <script src="external/typeahead/typeahead.js"></script>
+    <script src="external/magicsuggest/magicsuggest-min.js"></script>
     <!-- Load the site js -->
     <script src="js/site.js"></script>
     <!-- Load the page specific js -->
