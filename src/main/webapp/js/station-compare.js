@@ -64,6 +64,8 @@ function updateTable(stationList) {
 	
 	console.log(dataTableConfig);
 	
+	commodityTable=$('#data-table').dataTable(dataTableConfig);
+	
 //	$.ajax({
 //        type: "POST",
 //        url: "/api/commodities/stationPricePerCommodity"
@@ -104,8 +106,49 @@ function buildDataTablesConfig(stationList) {
 	var retVal = {};
 	
 	retVal["sDom"] = '<"row"<"col-sm-6"l><"col-sm-6"C>><"row"<"col-sm-12"t>><"row"<"col-sm-6"i><"col-sm-6"p>>';
+	retVal["sAjaxSource"] = "/api/commodities/pricePerStation";
+	retVal["sAjaxDataProp"] = "_embedded.commodityDetails";
 	
+	colArray = []
 	
+	// First column is the commoditiy name (in _id field)
+
+	colArray.push({mDataProp:'_id'});
+	
+	// Then for each station the columns are:
+	// Buy	Supply Level	Sell	Demand Level
+	
+	for(var i in stationList) {
+		station = stationList[i];
+		colArray.push({
+			mDataProp:'value.'+station+'.buy',
+			// For the buy column we only want to show value if not zero
+			mRender: function(data, type, full) {
+				if (data == 0) {
+					return "";
+				} else {
+					return data;
+				}
+			},
+			defaultContent:''
+		});
+		colArray.push({
+			mDataProp:'value.'+station+'.supplyLevel',
+			defaultContent:''
+		});
+		colArray.push({
+			mDataProp:'value.'+station+'.sell',
+			defaultContent:''
+		});
+		colArray.push({
+			mDataProp:'value.'+station+'.demandLevel',
+			defaultContent:''
+		});
+		
+		
+	}
+	
+	retVal["aoColumns"] = colArray;
 	return retVal;
 		
 }

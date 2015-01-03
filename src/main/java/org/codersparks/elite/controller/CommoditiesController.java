@@ -3,13 +3,10 @@ package org.codersparks.elite.controller;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.codersparks.elite.aggregation.AggregationHelper;
-import org.codersparks.elite.resource.CommodityPerStationResult;
 import org.codersparks.elite.resource.DistinctCommodities;
 import org.codersparks.elite.resource.pricePerStation.CommodityDetail;
 import org.slf4j.Logger;
@@ -18,8 +15,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceOptions;
 import org.springframework.data.mongodb.core.mapreduce.MapReduceResults;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.webmvc.RepositoryLinksResource;
 import org.springframework.hateoas.ExposesResourceFor;
+import org.springframework.hateoas.PagedResources;
+import org.springframework.hateoas.PagedResources.PageMetadata;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.ResourceProcessor;
 import org.springframework.hateoas.Resources;
 import org.springframework.http.HttpEntity;
@@ -31,10 +32,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mongodb.AggregationOutput;
 import com.mongodb.DB;
-import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
 
 @Controller
 @ExposesResourceFor(DistinctCommodities.class)
@@ -64,7 +62,7 @@ public class CommoditiesController implements
 		return new ResponseEntity<DistinctCommodities>(resource, HttpStatus.OK);
 	}
 
-	@RequestMapping("/api/commodities/stationPricePerCommodity")
+/*	@RequestMapping("/api/commodities/stationPricePerCommodity")
 	@ResponseBody
 	public HttpEntity<Resources<CommodityPerStationResult>> stationPricesPerCommodity() {
 
@@ -109,8 +107,62 @@ public class CommoditiesController implements
 
 		return entity;
 
-	}
+	}*/
 
+	
+	@RequestMapping("/api/commodities/pagedPricePerStation")
+	@ResponseBody
+	public PagedResources<Resource<CommodityDetail>> commodityPricePerStation(@Param("page") Long page, @Param("size") Long size) throws Exception {
+		
+		logger.info("Page: " + page + " Size: " + size);
+		
+		if(page == null) {
+			logger.debug("Page detected as null, setting to 1");
+			page = 0l;
+		}
+		
+		if(size == null) {
+			logger.debug("Size detected as null, setting to 20");
+			size = 20l;
+		}
+		String mapFunction = IOUtils.toString(this.getClass().getClassLoader()
+				.getResourceAsStream("CommodityPerStationMapFunction.js"));
+		logger.debug("Map Function: " + mapFunction);
+
+		String reduceFunction = IOUtils.toString(this.getClass()
+				.getClassLoader()
+				.getResourceAsStream("CommodityPerStationReduceFunction.js"));
+		logger.debug("Reduce Function: " + reduceFunction);
+
+		String finalizeFunction = IOUtils.toString(this.getClass()
+				.getClassLoader()
+				.getResourceAsStream("CommodityPerStationFinalizeFunction.js"));
+		logger.debug("Finalize Function: " + finalizeFunction);
+
+		MapReduceOptions mapReduceOptions = MapReduceOptions.options()
+				.outputTypeInline().finalizeFunction(finalizeFunction);
+
+		MapReduceResults<CommodityDetail> mapReduceResults = mongoTemplate
+				.mapReduce("commodityData", mapFunction, reduceFunction,
+						mapReduceOptions, CommodityDetail.class);
+
+		List<CommodityDetail> resultsList = new ArrayList<CommodityDetail>();
+		for (CommodityDetail result : mapReduceResults) {
+				logger.debug("Result object.toString(): " + result.toString());
+				resultsList.add(result);
+				
+		}
+		
+		PageMetadata meta = new PageMetadata(size, page, resultsList.size() );
+		
+		PagedResources<Resource<CommodityDetail>> resources = PagedResources.wrap(resultsList, meta);
+		
+		
+		
+		return resources;
+	}
+	
+	
 	@RequestMapping("/api/commodities/pricePerStation")
 	@ResponseBody
 	public HttpEntity<Resources<CommodityDetail>> commodityPricePerStation() throws Exception {
@@ -157,10 +209,14 @@ public class CommoditiesController implements
 		resource.add(linkTo(
 				methodOn(CommoditiesController.class).distinctCommodities())
 				.withRel("distinctCommoditiesList"));
-		resource.add(linkTo(
-				methodOn(CommoditiesController.class)
-						.stationPricesPerCommodity()).withRel(
-				"stationPricePerCommodity"));
+		try {
+			resource.add(linkTo(
+					methodOn(CommoditiesController.class).commodityPricePerStation()).withRel(
+					"pricePerCommodity"));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return resource;
 	}
 

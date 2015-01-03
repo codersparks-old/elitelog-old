@@ -5,8 +5,9 @@ import java.util.Map;
 import org.codersparks.elite.utils.JSONUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.hateoas.ResourceSupport;
 
-public class CommodityDetail {
+public class CommodityDetail extends ResourceSupport {
 	private static Logger logger = LoggerFactory.getLogger(CommodityDetail.class);
 	
 	private String _id;
