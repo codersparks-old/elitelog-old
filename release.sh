@@ -1,14 +1,20 @@
 # Script that will perform a release of elite log
 
-if [[ $# != 2 ]]
+if [[ $# < 2 ]] || [[ $# >3 ]]
 then
-	echo "Usage $0 [elitelog base folder] [openshift base folder]"
+	echo "Usage $0 [elitelog base folder] [openshift base folder] [optional:tag]"
 	exit 1
 fi
 
 ELITELOG_BASE_DIR=$1
 OPENSHIFT_BASE_DIR=$2
-TAG=$(date +%Y%m%d%H%M%S)
+
+if [[ $# == 2 ]]
+then
+	TAG=$(date +%Y%m%d%H%M%S)
+else
+	TAG=$3
+fi
 
 echo "Using elitelog dir: ......... $ELITELOG_BASE_DIR"
 echo "Using elitelog openshift dir: $OPENSHIFT_BASE_DIR"
@@ -17,6 +23,12 @@ echo "Using tag: .................. $TAG"
 echo -e "\nPreparing elite log..."
 
 pushd $ELITELOG_BASE_DIR
+
+if [[ $? != 0 ]]
+then
+	echo "Error changing to elitelog dir: $ELITELOG_BASE_DIR"
+	exit 1
+fi
 
 if [[ $(git status | grep "nothing to commit, working directory clean" | wc -l) -eq "1" ]]
 then 

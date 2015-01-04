@@ -1,45 +1,38 @@
 var commodityTable;
+var commoditiesList;
+var commodityTypeAhead;
+var selectedCommodity;
 
-
+var getCommodityList = function() {
+	$.ajax({
+		type: "GET",
+		url: "/api/commodities/distinct"
+	}).done(function(data) {
+		commoditiesList = data.commodities;
+		initializeCommodityTypeAhead($('#commodities-typeahed'));
+	});
+}
 
 $(document).ready(function() {
-    
-    var commodities = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        limit: 20,
-        prefetch: {
-            url: '/api/commodities/distinct',
-            filter: function(response) {
-                //console.log(list['commodities'])
-                
-                return $.map(response['commodities'], function(commodityValue) { return { name: commodityValue }; });
-            },
-			ttl: 60000
-        }
-    });
 	
-    commodities.initialize();
-
-	// To load all the data on page load uncomment this line
-	//updateCommodityTable("");
-	
-    $('#commodities-typeahead').typeahead(null, {
-       name: 'commodities',
-       displayKey: 'name',
-       source: commodities.ttAdapter()
-    });
+	getCommodityList();
         
 	// Give the user the option to refresh the data list
 	$('#commodity-refresh-btn').on('click', function() {
 		console.log("Refresh pressed");
-		commodities.clearPrefetchCache();
-		commodities.clearRemoteCache();
-		commodities.initialize(true);
+		console.log(commoditiesList);
+		getCommodityList();
 	});
 	
 	$('#commodity-show-btn').on('click', function() {
-		updateCommodityTable($('#commodities-typeahead').val());
+		var selectedCommodityList = commodityTypeAhead.getSelection();
+		if (selectedCommodityList.length != 1) {
+			alert("You must provide one and only 1 commodity");
+		} else {
+			selectedCommodity = selectedCommodityList[0];
+			console.log(selectedCommodity);
+			updateCommodityTable(selectedCommodity.name);
+		}
 	});
     
 	// Register the display of the help modal to the help div
@@ -112,6 +105,17 @@ var commodityToDataTable = function(sSource, aoData, fnCallback) {
 	});
 
 };
+
+var initializeCommodityTypeAhead = function() {
+	maxSelection = 1;
+	commodityTypeAhead = $('#commodities-typeahead').magicSuggest({
+		data: commoditiesList,
+		highlight: false,
+		allowFreeEntries: false,
+		maxSelection: maxSelection,
+		useTabKey: true,
+	});
+}
 
 function updateCommodityTable(commodity) {
 	

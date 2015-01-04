@@ -1,5 +1,6 @@
 var selectedStationList = [];
 var stationTypeAhead;
+var stationDataTable;
 
 var getStationList = function() {
     $.ajax({
@@ -42,7 +43,7 @@ $(document).ready(function() {
 
 var initialiseStationTypeAhead = function() {
     
-    maxSelection = 3
+    maxSelection = null;
     stationTypeAhead = $('#stations-typeahead').magicSuggest({
        data: stationList,
        highlight: false,
@@ -56,6 +57,12 @@ var initialiseStationTypeAhead = function() {
 }
 
 function updateTable(stationList) {
+	
+	if (stationDataTable != undefined) {
+		console.log("Table already initialised, destroying...");
+		stationDataTable.fnDestroy();
+	}
+	
 	console.log("2StationList: " + stationList)
 	
 	generateTableHtml(stationList);
@@ -64,7 +71,9 @@ function updateTable(stationList) {
 	
 	console.log(dataTableConfig);
 	
-	commodityTable=$('#data-table').dataTable(dataTableConfig);
+	
+	
+	stationDataTable=$('#data-table').dataTable(dataTableConfig);
 	
 //	$.ajax({
 //        type: "POST",
@@ -168,6 +177,8 @@ function buildDataTablesConfig(stationList) {
 	}
 	
 	retVal["aoColumns"] = colArray;
+	
+	retVal["scrollX"] = true;
 	return retVal;
 		
 }
