@@ -1,0 +1,74 @@
+@import "branding";
+
+body {
+  padding-top: 55px;
+}
+
+footer {
+    padding: 5px;
+}
+
+.img-margin {
+  margin-bottom: 5px;
+}
+
+.panel-heading .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e114";    /* adjust as needed, taken from bootstrap.css */
+    float: right;        /* adjust as needed */
+    color: grey;         /* adjust as needed */
+}
+.panel-heading .accordion-toggle.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+}
+
+
+/* Station compare table */
+#data-table th {
+  text-align: center;
+  vertical-align: middle;
+}
+
+// Adding some column striping aswell
+#data-table .station-odd {
+  background: @column-stripe;
+}
+
+#data-table .odd .station-odd {
+  background: darken(@column-stripe, 2%);
+}
+
+#data-table > tbody > tr:hover > .station-odd {
+  background: darken(@column-stripe, 4%);
+}
+
+
+/* MagicSuggest Override */
+.ms-ctn .ms-sel-item {
+  background: @state-info-bg;
+  color: @state-info-text;
+  font-size: 14px;
+  margin: 0px 5px 0px 0;
+  padding-left: 3px;
+  border: 1px solid @state-info-border;
+}
+
+
+.ms-res-ctn .ms-res-item em {
+  background: #ff4000;
+  color: #ffffff;
+}
+
+.ms-res-ctn .ms-res-item {
+  color: #555;  
+}
+
+
+.ms-res-ctn .ms-res-item-active {
+  background: #ff4000;
+  color: #fff;
+}
+
+/* MagicSuggest */

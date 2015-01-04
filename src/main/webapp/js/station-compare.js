@@ -84,7 +84,13 @@ function generateTableHtml(stationList) {
 	header = '<thead><tr><th rowspan=2>Commodity</th>';
 	
 	for(i = 0; i< stationList.length; i++ ) {
-		header += "<th colspan='4'>" + stationList[i] + "</th>";
+		var stationClass;
+		if (i % 2 == 0) {
+			stationClass = "station-even";
+		} else {
+			stationClass = "station-odd";
+		}
+		header += "<th colspan='4' class='" + stationClass + "' >" + stationList[i] + "</th>";
 	}
 	header += '</tr><tr>'
 	
@@ -119,6 +125,15 @@ function buildDataTablesConfig(stationList) {
 	// Buy	Supply Level	Sell	Demand Level
 	
 	for(var i in stationList) {
+		
+		var stationClass;
+		if (i % 2 == 0) {
+			stationClass = "station-even";
+		} else {
+			stationClass = "station-odd";
+		}
+		
+		console.log("Index: " + i);
 		station = stationList[i];
 		colArray.push({
 			mDataProp:'value.'+station+'.buy',
@@ -130,19 +145,23 @@ function buildDataTablesConfig(stationList) {
 					return data;
 				}
 			},
-			defaultContent:''
+			defaultContent:'',
+			sClass: stationClass
 		});
 		colArray.push({
 			mDataProp:'value.'+station+'.supplyLevel',
-			defaultContent:''
+			defaultContent:'',
+			sClass: stationClass
 		});
 		colArray.push({
 			mDataProp:'value.'+station+'.sell',
-			defaultContent:''
+			defaultContent:'',
+			sClass: stationClass
 		});
 		colArray.push({
 			mDataProp:'value.'+station+'.demandLevel',
-			defaultContent:''
+			defaultContent:'',
+			sClass: stationClass
 		});
 		
 		
