@@ -1,10 +1,16 @@
 package org.codersparks.edscclient;
 
+import org.codersparks.elitelog.utils.JSONUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)	
 public class EDSCPostData {
+	
+	private static Logger logger = LoggerFactory.getLogger(EDSCPostData.class);
 
 	private int ver = 2;
 	private boolean test = false;
@@ -35,5 +41,13 @@ public class EDSCPostData {
 		this.filter = filter;
 	}
 	
-	
+	@Override
+	public String toString() {
+		try {
+			return JSONUtils.convertToJson(this);
+		} catch (Exception e) {
+			logger.error("Cannot convert object to JSON string dropping back to default behaviour", e);
+			return super.toString();
+		}
+	}	
 }

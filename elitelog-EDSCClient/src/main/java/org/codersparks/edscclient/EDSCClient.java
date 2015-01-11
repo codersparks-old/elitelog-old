@@ -15,7 +15,7 @@ public class EDSCClient {
 	
 	private final static String getSystemsUrl = "http://edstarcoordinator.com/api.asmx/GetSystems";
 	
-	public String getSystems(boolean test, int outputMode, EDSCFilter filter) {
+	public EDSCSystemsResultWrapper getSystems(boolean test, int outputMode, EDSCFilter filter) {
 		
 		EDSCPostData query = new EDSCPostData();
 		query.setTest(test);
@@ -27,7 +27,7 @@ public class EDSCClient {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
-		ResponseEntity<String> response = restTemplate.postForEntity(getSystemsUrl, new EDSCPostDataWrapper(query), String.class);
+		ResponseEntity<EDSCSystemsResultWrapper> response = restTemplate.postForEntity(getSystemsUrl, new EDSCPostDataWrapper(query), EDSCSystemsResultWrapper.class);
 		
 		return response.getBody();
 		

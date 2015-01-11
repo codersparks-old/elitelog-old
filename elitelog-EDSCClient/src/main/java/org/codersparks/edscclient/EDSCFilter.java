@@ -3,11 +3,17 @@ package org.codersparks.edscclient;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.codersparks.elitelog.utils.JSONUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(Include.NON_NULL)	
 public class EDSCFilter {
+	
+	private static Logger logger = LoggerFactory.getLogger(EDSCFilter.class);
 
 	/**
 	 * The Filter class is designed to be built using the static methods
@@ -73,6 +79,16 @@ public class EDSCFilter {
 
 	public void setCoordsphere(EDSCCoordSphere coordsphere) {
 		this.coordsphere = coordsphere;
+	}
+	
+	@Override
+	public String toString() {
+		try {
+			return JSONUtils.convertToJson(this);
+		} catch (Exception e) {
+			logger.error("Cannot convert object to JSON string dropping back to default behaviour", e);
+			return super.toString();
+		}
 	}
 
 	public static class EDSCFilterBuilder {
