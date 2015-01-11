@@ -1,4 +1,4 @@
-package org.codersparks.elite.utils;
+package org.codersparks.elitelog.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

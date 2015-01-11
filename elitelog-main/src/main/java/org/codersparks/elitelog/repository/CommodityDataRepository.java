@@ -1,9 +1,9 @@
-package org.codersparks.elite.repository;
+package org.codersparks.elitelog.repository;
 
 import java.util.Collection;
 import java.util.List;
 
-import org.codersparks.elite.model.CommodityData;
+import org.codersparks.elitelog.model.CommodityData;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

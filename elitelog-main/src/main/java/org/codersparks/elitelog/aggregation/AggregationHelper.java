@@ -1,4 +1,4 @@
-package org.codersparks.elite.aggregation;
+package org.codersparks.elitelog.aggregation;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;

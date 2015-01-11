@@ -1,11 +1,11 @@
-package org.codersparks.elite.controller;
+package org.codersparks.elitelog.controller;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 
 import java.util.List;
 
-import org.codersparks.elite.resource.DistinctSystems;
+import org.codersparks.elitelog.resource.DistinctSystems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.rest.webmvc.RepositoryLinksResource;

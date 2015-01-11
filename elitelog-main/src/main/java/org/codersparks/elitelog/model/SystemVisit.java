@@ -1,4 +1,4 @@
-package org.codersparks.elite.model;
+package org.codersparks.elitelog.model;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package org.codersparks.elite;
+package org.codersparks.elitelog;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;

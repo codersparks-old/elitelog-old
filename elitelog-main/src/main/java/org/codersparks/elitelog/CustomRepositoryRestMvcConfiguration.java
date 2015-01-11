@@ -1,4 +1,4 @@
-package org.codersparks.elite;
+package org.codersparks.elitelog;
 
 import java.net.URI;
 

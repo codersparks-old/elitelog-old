@@ -1,4 +1,4 @@
-package org.codersparks.elite.resource;
+package org.codersparks.elitelog.resource;
 
 import java.util.List;
 import java.util.TreeSet;

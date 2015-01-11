@@ -1,4 +1,4 @@
-package org.codersparks.elite.controller;
+package org.codersparks.elitelog.controller;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
-import org.codersparks.elite.resource.DistinctCommodities;
-import org.codersparks.elite.resource.pricePerStation.CommodityDetail;
+import org.codersparks.elitelog.resource.DistinctCommodities;
+import org.codersparks.elitelog.resource.pricePerStation.CommodityDetail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

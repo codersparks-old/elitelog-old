@@ -1,9 +1,9 @@
-package org.codersparks.elite.resource;
+package org.codersparks.elitelog.resource;
 
 import java.util.Date;
 import java.util.List;
 
-import org.codersparks.elite.utils.JSONUtils;
+import org.codersparks.elitelog.utils.JSONUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

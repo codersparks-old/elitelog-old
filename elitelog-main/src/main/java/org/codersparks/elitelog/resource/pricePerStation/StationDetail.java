@@ -1,8 +1,8 @@
-package org.codersparks.elite.resource.pricePerStation;
+package org.codersparks.elitelog.resource.pricePerStation;
 
 import java.util.Date;
 
-import org.codersparks.elite.utils.JSONUtils;
+import org.codersparks.elitelog.utils.JSONUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

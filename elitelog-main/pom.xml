@@ -48,6 +48,10 @@
 			<version>2.4</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.codersparks</groupId>
+			<artifactId>elitelog-utils</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
