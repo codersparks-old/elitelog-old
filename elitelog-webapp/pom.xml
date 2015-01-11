@@ -8,10 +8,10 @@
     	<version>0.0.1-SNAPSHOT</version>
     	<relativePath>../elitelog-parent/pom.xml</relativePath>
     </parent>
-    <artifactId>elitelog-main</artifactId>
+    <artifactId>elitelog-webapp</artifactId>
 	<packaging>war</packaging>
 
-	<name>elitelog</name>
+	<name>elitelog-webapp</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>

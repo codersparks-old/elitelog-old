@@ -13,7 +13,9 @@
     <packaging>pom</packaging>
     
     <modules>
-    	<module>../elitelog-main/</module>
+    	<module>../elitelog-webapp/</module>
+    	<module>../elitelog-EDSCClient/</module>
+    	<module>../elitelog-utils/</module>
     	<module>../java-eddn-client-test</module>
     </modules>
 
