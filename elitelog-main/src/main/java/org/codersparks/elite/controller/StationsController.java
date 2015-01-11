@@ -6,7 +6,6 @@ import static org.springframework.hateoas.mvc.ControllerLinkBuilder.methodOn;
 import java.util.List;
 
 import org.codersparks.elite.resource.DistinctStation;
-import org.codersparks.elite.resource.DistinctSystems;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.rest.webmvc.RepositoryLinksResource;
@@ -29,6 +28,7 @@ public class StationsController implements ResourceProcessor<RepositoryLinksReso
 	@ResponseBody
 	public HttpEntity<DistinctStation> distinctStations() {
 		
+		@SuppressWarnings("unchecked")
 		List<String> distinctList = mongo.getCollection("commodityData").distinct("station");
 		
 		DistinctStation resource = new DistinctStation(distinctList);

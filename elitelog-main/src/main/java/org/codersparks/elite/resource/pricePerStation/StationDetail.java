@@ -2,7 +2,6 @@ package org.codersparks.elite.resource.pricePerStation;
 
 import java.util.Date;
 
-import org.codersparks.elite.resource.CommodityPerStationResult;
 import org.codersparks.elite.utils.JSONUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

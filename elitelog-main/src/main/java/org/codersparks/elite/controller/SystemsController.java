@@ -29,6 +29,7 @@ public class SystemsController implements ResourceProcessor<RepositoryLinksResou
 	@ResponseBody
 	public HttpEntity<DistinctSystems> distinctSystems() {
 		
+		@SuppressWarnings("unchecked")
 		List<String> distinctList = mongo.getCollection("commodityData").distinct("system");
 		
 		DistinctSystems resource = new DistinctSystems(distinctList);

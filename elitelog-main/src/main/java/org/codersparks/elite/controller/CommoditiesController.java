@@ -53,6 +53,7 @@ public class CommoditiesController implements
 	@ResponseBody
 	public HttpEntity<DistinctCommodities> distinctCommodities() {
 
+		@SuppressWarnings("unchecked")
 		List<String> distinctList = mongoTemplate
 				.getCollection("commodityData").distinct("name");
 
