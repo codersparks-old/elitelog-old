@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-    	<groupId>org.codersparks</groupId>
-    	<artifactId>elitelog-parent</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    	<relativePath>../elitelog-parent/pom.xml</relativePath>
-    </parent>
+		<groupId>org.codersparks</groupId>
+		<artifactId>elitelog-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../elitelog-parent/pom.xml</relativePath>
+	</parent>
 	<artifactId>java-eddn-client-test</artifactId>
 	<packaging>jar</packaging>
 
@@ -29,6 +29,22 @@
 			<groupId>org.zeromq</groupId>
 			<artifactId>jeromq</artifactId>
 			<version>0.3.4</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codersparks</groupId>
+			<artifactId>elitelog-utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codersparks</groupId>
+			<artifactId>elitelog-model</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
 		</dependency>
 	</dependencies>
 </project>

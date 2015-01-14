@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-    	<groupId>org.codersparks</groupId>
-    	<artifactId>elitelog-parent</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    	<relativePath>../elitelog-parent/pom.xml</relativePath>
-    </parent>
-    <artifactId>elitelog-webapp</artifactId>
+		<groupId>org.codersparks</groupId>
+		<artifactId>elitelog-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+		<relativePath>../elitelog-parent/pom.xml</relativePath>
+	</parent>
+	<artifactId>elitelog-webapp</artifactId>
 	<packaging>war</packaging>
 
 	<name>elitelog-webapp</name>
@@ -17,7 +17,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 
 	<dependencies>
 		<dependency>
@@ -45,12 +45,15 @@
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
-			<version>2.4</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.codersparks</groupId>
 			<artifactId>elitelog-utils</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.codersparks</groupId>
+			<artifactId>elitelog-model</artifactId>
 		</dependency>
 	</dependencies>
 

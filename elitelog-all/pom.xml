@@ -14,8 +14,11 @@
     
     <modules>
     	<module>../elitelog-webapp/</module>
+    	<module>../elitelog-model/</module>
     	<module>../elitelog-EDSCClient/</module>
+    	<module>../elitelog-EDDNClient/</module>
     	<module>../elitelog-utils/</module>
+    	<module>../elitelog-systemlogger/</module>
     	<module>../java-eddn-client-test</module>
     </modules>
 
