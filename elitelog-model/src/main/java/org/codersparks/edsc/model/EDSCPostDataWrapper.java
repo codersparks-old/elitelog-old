@@ -1,4 +1,4 @@
-package org.codersparks.edscclient;
+package org.codersparks.edsc.model;
 
 /**
  * For some obscure reason the expected POST data for EDSC expects the query

@@ -1,4 +1,4 @@
-package org.codersparks.edscclient;
+package org.codersparks.edsc.model;
 
 import org.codersparks.elitelog.utils.JSONUtils;
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package org.codersparks.edscclient;
+package org.codersparks.edsc.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

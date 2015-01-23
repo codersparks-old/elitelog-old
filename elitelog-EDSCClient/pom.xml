@@ -28,7 +28,7 @@
 
 		<dependency>
 			<groupId>org.codersparks</groupId>
-			<artifactId>elitelog-utils</artifactId>
+			<artifactId>elitelog-model</artifactId>
 		</dependency>
 	</dependencies>
 </project>
