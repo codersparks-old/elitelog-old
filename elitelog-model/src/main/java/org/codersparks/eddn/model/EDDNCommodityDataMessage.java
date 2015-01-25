@@ -19,6 +19,8 @@ public class EDDNCommodityDataMessage {
 	private int demand;
 	private int sellPrice;
 	private String itemName;
+	private String demandLevel;
+	private String supplyLevel;
 
 	public int getBuyPrice() {
 		return buyPrice;
@@ -82,6 +84,22 @@ public class EDDNCommodityDataMessage {
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
+	}
+
+	public String getDemandLevel() {
+		return demandLevel;
+	}
+
+	public void setDemandLevel(String demandLevel) {
+		this.demandLevel = demandLevel;
+	}
+
+	public String getSupplyLevel() {
+		return supplyLevel;
+	}
+
+	public void setSupplyLevel(String supplyLevel) {
+		this.supplyLevel = supplyLevel;
 	}
 
 	@Override

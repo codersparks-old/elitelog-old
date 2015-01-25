@@ -4,8 +4,10 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.hateoas.ResourceSupport;
 
+@Document
 public class CommodityData extends ResourceSupport { 
 	
 	@Id
@@ -34,10 +36,27 @@ public class CommodityData extends ResourceSupport {
 	
 	private int sell;
 	
-	@Indexed(expireAfterSeconds=5184000)
+	@Indexed(expireAfterSeconds=1296000)
 	private Date created = new Date();
 	
 	
+	
+	
+	public CommodityData(String station, String system, String name,
+			int supply, String supplyLevel, int demand, String demandLevel,
+			int buy, int sell, Date created) {
+		super();
+		this.station = station;
+		this.system = system;
+		this.name = name;
+		this.supply = supply;
+		this.supplyLevel = supplyLevel;
+		this.demand = demand;
+		this.demandLevel = demandLevel;
+		this.buy = buy;
+		this.sell = sell;
+		this.created = created;
+	}
 	public String getStation() {
 		return station;
 	}
