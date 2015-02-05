@@ -36,10 +36,14 @@ public class CommodityData extends ResourceSupport {
 	
 	private int sell;
 	
-	@Indexed(expireAfterSeconds=1296000)
+	@Indexed(expireAfterSeconds=172800)
 	private Date created = new Date();
 	
 	
+	/**
+	 * Blank constructor for JSON mapper
+	 */
+	public CommodityData() {}
 	
 	
 	public CommodityData(String station, String system, String name,
